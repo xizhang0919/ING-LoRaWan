@@ -15,12 +15,17 @@
     ></script>
 
     <style>
+
+
+
       .temperature-container {
         position: absolute;
         right: 0;
         padding: 50px;
         font-size: 48px;
-        text-transform: uppercase;
+        font-weight: lighter;
+        color: #9e9e9e;
+        letter-spacing: 5px;
       }
 
       .temperature {
@@ -37,7 +42,9 @@
         left: 0;
         padding: 50px;
         font-size: 48px;
-        text-transform: uppercase;
+        font-weight: 300;
+        color: #9e9e9e;
+        letter-spacing: 5px;
       }
 
       .moisture {
@@ -45,24 +52,34 @@
         font-size: 36px;
       }
 
-      .stem.moisture-high,
+      .stem.moisture-high {
+        background: #66ad66;
+      }
+
       .stem.moisture-high .leaf {
-        background: #2fa52a;
+        background: #80c56d;
       }
 
-      .stem.moisture-medium,
+      .stem.moisture-medium {
+        background: #9a9903;
+      }
       .stem.moisture-medium .leaf {
-        background: #a5a42a;
+        background: #a5a605;
       }
 
-      .stem.moisture-low,
+      .stem.moisture-low {
+        background: #d2ac05;
+      }
       .stem.moisture-low.leaf {
-        background: #eaa46b;
+        background: #ffd334;
       }
 
       body {
-        background: #a9ddd6;
-        font-family: "Roboto", sans-serif;
+        font-family: "Roboto";
+        background-image: url("../static/farm.jpg"), linear-gradient(white, black);
+        background-size: cover;
+        background-repeat: no-repeat;
+        height: 100vh;
       }
 
       .wrapper {
@@ -80,6 +97,8 @@
         width: 600px;
         height: 600px;
         background: none;
+        border-radius: 500px;
+        background: rgba(0,10,10, 0.3);
       }
 
       .pot {
@@ -88,7 +107,7 @@
         height: 20%;
         bottom: 0;
         left: 40%;
-        background: #fcaa67;
+        background:#ac5b26;
         -webkit-clip-path: polygon(0 0, 100% 0, 90% 100%, 10% 100%);
         clip-path: polygon(0 0, 100% 0, 90% 100%, 10% 100%);
         box-shadow: inset 0 16px 20px rgba(0, 0, 0, 0.3);
@@ -100,7 +119,7 @@
         height: 5%;
         bottom: 17%;
         left: 39%;
-        background: #fcaa67;
+        background: #d1773f;
         border-radius: 3px;
       }
 
@@ -110,7 +129,7 @@
         height: 50%;
         left: 49%;
         bottom: 20%;
-        background: #eaa46b;
+        background: #d2ac05;
       }
 
       .leaf {
@@ -118,7 +137,7 @@
         width: 700%;
         height: 10%;
         border-radius: 50%;
-        background: #eaa46b;
+        background: #ffd334;
       }
 
       .leaf .line {
@@ -258,7 +277,7 @@
         <div class="temperature">-</div>
       </div>
       <div class="box">
-        <div class="stem moisture-L">
+        <div class="stem moisture-low">
           <div class="leaf leaf01"><div class="line"></div></div>
           <div class="leaf leaf02"><div class="line"></div></div>
           <div class="leaf leaf03"><div class="line"></div></div>
