@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width" />
+    <title>LORa Experiment</title>
+    <link rel="stylesheet" type="text/css" href="/css/styles.css" />
+
+    <script
+      src="https://code.jquery.com/jquery-3.4.1.min.js"
+      integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+      crossorigin="anonymous"
+    ></script>
+
+    <style>
+      .stem.moisture-high,
+      .stem.moisture-high .leaf {
+        background: #2fa52a;
+      }
+
+      .stem.moisture-medium,
+      .stem.moisture-medium .leaf {
+        background: #a5a42a;
+      }
+
+      .stem.moisture-low,
+      .stem.moisture-low .leaf {
+        background: #eaa46b;
+      }
+
+      body {
+        background: #a9ddd6;
+      }
+
+      .wrapper {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+      }
+
+      .box {
+        position: relative;
+        margin: auto;
+        display: block;
+        margin-top: 8%;
+        width: 600px;
+        height: 600px;
+        background: none;
+      }
+
+      .pot {
+        position: absolute;
+        width: 20%;
+        height: 20%;
+        bottom: 0;
+        left: 40%;
+        background: #fcaa67;
+        -webkit-clip-path: polygon(0 0, 100% 0, 90% 100%, 10% 100%);
+        clip-path: polygon(0 0, 100% 0, 90% 100%, 10% 100%);
+        box-shadow: inset 0 16px 20px rgba(0, 0, 0, 0.3);
+      }
+
+      .pot-top {
+        position: absolute;
+        width: 22%;
+        height: 5%;
+        bottom: 17%;
+        left: 39%;
+        background: #fcaa67;
+        border-radius: 3px;
+      }
+
+      .stem {
+        position: absolute;
+        width: 2%;
+        height: 50%;
+        left: 49%;
+        bottom: 20%;
+        background: #eaa46b;
+      }
+
+      .leaf {
+        position: absolute;
+        width: 700%;
+        height: 10%;
+        border-radius: 50%;
+        background: #eaa46b;
+      }
+
+      .leaf .line {
+        position: absolute;
+        width: 80%;
+        height: 1%;
+        background: rgba(0, 0, 0, 0.1);
+        top: 48%;
+      }
+
+      .leaf01 {
+        top: 70%;
+        left: 50%;
+        transform: rotate(-25deg);
+      }
+
+      .leaf02 {
+        top: 50%;
+        right: 50%;
+        transform: rotate(205deg);
+      }
+
+      .leaf03 {
+        top: 30%;
+        left: 50%;
+        transform: rotate(-25deg);
+      }
+
+      .leaf04 {
+        top: 20%;
+        right: 50%;
+        transform: rotate(205deg);
+      }
+
+      .leaf05 {
+        top: -17%;
+        left: -120%;
+        transform: rotate(-60deg);
+      }
+
+      .leaf06 {
+        top: -9%;
+        right: 22%;
+        transform: rotate(195deg);
+      }
+
+      /* --- ANIMATION --- */
+
+      .stem,
+      .leaf {
+        animation-duration: 1.2s !important;
+        animation-fill-mode: forwards;
+      }
+
+      .stem.rain {
+        animation: grow 1s linear 1;
+      }
+
+      @keyframes grow {
+        0% {
+          bottom: -40%;
+          width: 1%;
+        }
+
+        100% {
+          bottom: 20%;
+          width: 2%;
+        }
+      }
+
+      .stem.rain .leaf {
+        animation: leafGrow 1s linear 1;
+        animation-fill-mode: forwards;
+      }
+
+      @keyframes leafGrow {
+        0% {
+          width: 0%;
+          height: 0%;
+        }
+
+        100% {
+          width: 700%;
+          height: 10%;
+        }
+      }
+
+      .stem.rain .leaf05 {
+        animation: topLeafRight 1s linear 1;
+      }
+
+      @keyframes topLeafRight {
+        0% {
+          top: 5%;
+          width: 0%;
+          height: 0%;
+          left: 10%;
+        }
+
+        100% {
+          width: 700%;
+          height: 10%;
+          top: -17%;
+          left: -120%;
+        }
+      }
+
+      .stem.rain .leaf06 {
+        animation: topLeafLeft 1s linear 1;
+      }
+
+      @keyframes topLeafLeft {
+        0% {
+          top: 0%;
+          width: 0%;
+          height: 0%;
+        }
+
+        100% {
+          width: 700%;
+          height: 10%;
+          top: -9%;
+        }
+      }
+
+      /* .drop {
+        position: absolute;
+        top: 30px;
+        left: 20px;
+        width: 50px;
+        height: 50px;
+        border: none;
+        -webkit-border-radius: 80% 0 55% 50% / 55% 0 80% 50%;
+        border-radius: 80% 0 55% 50% / 55% 0 80% 50%;
+        font: normal 100% / normal Arial, Helvetica, sans-serif;
+        background: #17bebb;
+        -webkit-transform: rotateZ(-45deg);
+        transform: rotateZ(-45deg);
+        -webkit-transform-origin: 50% 50% 0;
+        transform-origin: 50% 50% 0;
+        animation: rain 2s linear 1;
+        animation-fill-mode: forwards;
+        cursor: pointer;
+        z-index: 9999;
+      } */
+    </style>
+  </head>
+
+  <body>
+    <!-- <div class="drop"></div> -->
+    <div class="wrapper">
+      <div class="box">
+        <div class="stem moisture-low">
+          <div class="leaf leaf01"><div class="line"></div></div>
+          <div class="leaf leaf02"><div class="line"></div></div>
+          <div class="leaf leaf03"><div class="line"></div></div>
+          <div class="leaf leaf04"><div class="line"></div></div>
+          <div class="leaf leaf05"><div class="line"></div></div>
+          <div class="leaf leaf06"><div class="line"></div></div>
+        </div>
+        <div class="pot"></div>
+        <div class="pot-top"></div>
+      </div>
+    </div>
+
+    <script>
+      let currentStatus = "low";
+      function updatePlantState(status) {
+        $(".stem")
+          .removeClass(`moisture-${currentStatus}`)
+          .addClass(`moisture-${status}`);
+
+        $(".stem").addClass("rain");
+        setTimeout(function() {
+          $(".stem").removeClass("rain");
+        }, 1200);
+      }
+
+      setInterval(async () => {
+        const response = await fetch("http://localhost:8888/status");
+        const status = await response.json();
+        updatePlantState(status);
+        if (currentStatus !== status) {
+          currentStatus = status;
+        }
+      }, 3000);
+    </script>
+  </body>
+</html>
