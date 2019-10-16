@@ -3,7 +3,6 @@
   <head>
     <meta name="viewport" content="width=device-width" />
     <title>LORa Experiment</title>
-    <link rel="stylesheet" type="text/css" href="/css/styles.css" />
 
     <script
       src="https://code.jquery.com/jquery-3.4.1.min.js"
@@ -12,18 +11,18 @@
     ></script>
 
     <style>
-      .stem.moisture-high,
-      .stem.moisture-high .leaf {
+      .stem.moisture-H,
+      .stem.moisture-H .leaf {
         background: #2fa52a;
       }
 
-      .stem.moisture-medium,
-      .stem.moisture-medium .leaf {
+      .stem.moisture-M,
+      .stem.moisture-M .leaf {
         background: #a5a42a;
       }
 
-      .stem.moisture-low,
-      .stem.moisture-low .leaf {
+      .stem.moisture-L,
+      .stem.moisture-L.leaf {
         background: #eaa46b;
       }
 
@@ -236,7 +235,7 @@
     <!-- <div class="drop"></div> -->
     <div class="wrapper">
       <div class="box">
-        <div class="stem moisture-low">
+        <div class="stem moisture-L">
           <div class="leaf leaf01"><div class="line"></div></div>
           <div class="leaf leaf02"><div class="line"></div></div>
           <div class="leaf leaf03"><div class="line"></div></div>
@@ -250,8 +249,9 @@
     </div>
 
     <script>
-      let currentStatus = "low";
-      function updatePlantState(status) {
+      let currentStatus = null;
+      function updatePlantState(status="L") {
+  
         $(".stem")
           .removeClass(`moisture-${currentStatus}`)
           .addClass(`moisture-${status}`);
@@ -264,12 +264,18 @@
 
       setInterval(async () => {
         const response = await fetch("http://localhost:8888/status");
-        const status = await response.json();
-        updatePlantState(status);
-        if (currentStatus !== status) {
+     
+        const [status] = await response.text();
+        console.log(status, currentStatus)
+        
+        if (currentStatus !== status || status === null ) {
+          updatePlantState(status);
           currentStatus = status;
+          
         }
-      }, 3000);
+      }, 5000);
+
+
     </script>
   </body>
 </html>

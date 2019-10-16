@@ -21,7 +21,7 @@ decoder_fn = """function Decoder(payload) {return { raw_data: String.fromCharCod
 
 class Status():
     def __init__(self):
-        self.status = 'low'
+        self.status = 'L'
 
     def update_status(self, update):
         self.status = update
