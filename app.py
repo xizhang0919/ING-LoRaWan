@@ -21,7 +21,7 @@ decoder_fn = """function Decoder(payload) {return { raw_data: String.fromCharCod
 
 class Status():
     def __init__(self):
-        self.status = 'default'
+        self.status = 'low'
 
     def update_status(self, update):
         self.status = update
@@ -30,7 +30,7 @@ class Status():
         return str(self.status)
 
 
-status = Status()
+STATUS = Status()
 
 
 # message receiving callback
@@ -38,11 +38,11 @@ def uplink_callback(msg, client):
     base64_decoded_message = base64.b64decode(msg.payload_raw)
     raw_message = base64_decoded_message.decode()
     # update status
-    status.update_status(raw_message)
+    STATUS.update_status(raw_message)
 
     # temp = str(raw_message)
-    print('Getting messages from application {} with payload {} {}'
-          .format(msg.dev_id, raw_message, status.get_status()))
+    print('Getting messages from application {} with payload {} STATUS {}'
+          .format(msg.dev_id, raw_message, STATUS.get_status()))
 
 
 # create ttn handler
@@ -67,7 +67,7 @@ def index():
 
 @app.route('/status')
 def status():
-    return '"high"'
+    return STATUS.get_status()
 
 
 if __name__ == '__main__':
