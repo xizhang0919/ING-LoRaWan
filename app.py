@@ -30,7 +30,7 @@ class Status():
         self.temperature = updated_temperature
     
     def get_status(self):
-        return moisture_types[moisture], temperature
+        return moisture_types[self.moisture], self.temperature
 
 
 STATUS = Status()
@@ -90,7 +90,7 @@ def index():
 def status():
     moisture_latest, temperature_latest = STATUS.get_status()
     return jsonify(
-        mositure=moisture_latest,
+        moisture=moisture_latest,
         temperature=temperature_latest
     )
 
