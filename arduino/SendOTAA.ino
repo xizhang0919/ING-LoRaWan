@@ -46,7 +46,6 @@ void setup()
 void loop()
 {
   debugSerial.println("-- LOOP");
-
   int moistureValue = analogRead(inputPin);
   
   debugSerial.println(moistureValue);
@@ -60,26 +59,27 @@ void loop()
     moisture = 'H';
   }
 
-  float temperatureValue = dht.readTemperature();;
+  float temperatureValue = dht.readTemperature();
+  debugSerial.println(temperatureValue);
 
-   char temperature[6];
-   sprintf(temperature, "%.2f", temperatureValue);
+  char temperature[6];
+  dtostrf(temperatureValue, 5, 2, temperature); 
 
-   char payload[10];
-   int ind=0;
-   payload[ind++] = moisture;
-   payload[ind++] = '#';
+  char payload[10];
+  int ind=0;
+  payload[ind++]=moisture;
+  payload[ind++] = '#';
 
-   for(int j=0;j<sizeof(temperature);j++) {
-      if (isdigit(temperature[j])) {
-         int val = temperature[j] - '0';
-         char alpha = (char) ('A' + val);
-         payload[ind++] = alpha;
-      }
-      else {
-         payload[ind++] = '#';
-      }
-   }
+  for(int j=0;j<sizeof(temperature);j++) {
+    if (isdigit(temperature[j])) {
+      int val = temperature[j] - '0';
+      char alpha = (char) ('A' + val);   
+      payload[ind++] = alpha;
+    }
+    else {
+      payload[ind++] = '#';
+    }
+  }
   payload[ind] = '#';
   ttn.sendBytes(payload, sizeof(payload));
   

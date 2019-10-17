@@ -46,7 +46,7 @@ def decode_num(num_str):
     return num
 
 def get_temperature(raw_message):
-    parts = a.split('#')
+    parts = raw_message.split('#')
     base_num = decode_num(parts[1])
     decimal_point = decode_num(parts[2])
     return '{}.{}'.format(base_num, decimal_point)
@@ -57,12 +57,13 @@ def uplink_callback(msg, client):
     raw_message = base64_decoded_message.decode()
     moisture = get_moisture(raw_message)
     temperature = get_temperature(raw_message)
+    print('moisture {} temperature {} '.format(moisture, temperature))
     # update status
     STATUS.update_status(moisture, temperature)
 
     # temp = str(raw_message)
-    print('Getting messages from application {} with payload {} moisture {} temperature {}'
-          .format(msg.dev_id, raw_message, moisture, temperature))
+    print('Getting messages from application {} with payload {}'
+          .format(msg.dev_id, raw_message))
 
 
 # create ttn handler
