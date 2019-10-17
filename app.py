@@ -2,7 +2,7 @@ from __future__ import absolute_import
 
 import ttn
 import os
-from flask import Flask, render_template
+from flask import Flask, render_template, jsonify
 import base64
 
 # set env variable
@@ -18,31 +18,51 @@ access_key = "ttn-account-v2.aRjE5PGhlD_4ipcULYAFvFl_GTKLHQSkKiZjaq6SNxQ"
 # decoder function
 decoder_fn = """function Decoder(payload) {return { raw_data: String.fromCharCode.apply(null, payload) };}"""
 
+moisture_types = {'L': 'low', 'M': 'medium', 'H':'high'}
 
 class Status():
     def __init__(self):
-        self.status = 'L'
+        self.moisture = 'L'
+        self.temperature = '24.20'
 
-    def update_status(self, update):
-        self.status = update
-
+    def update_status(self, updated_moisture, updated_temperature):
+        self.moisture = updated_moisture
+        self.temperature = updated_temperature
+    
     def get_status(self):
-        return str(self.status)
+        return moisture_types[moisture], temperature
 
 
 STATUS = Status()
 
+def get_moisture(raw_message):
+    return raw_message.split('#')[0]
+
+def decode_num(num_str):
+    num = str()
+    for i in num_str:
+        val = ord(i) - 65
+        num += str(val)
+    return num
+
+def get_temperature(raw_message):
+    parts = a.split('#')
+    base_num = decode_num(parts[1])
+    decimal_point = decode_num(parts[2])
+    return '{}.{}'.format(base_num, decimal_point)
 
 # message receiving callback
 def uplink_callback(msg, client):
     base64_decoded_message = base64.b64decode(msg.payload_raw)
     raw_message = base64_decoded_message.decode()
+    moisture = get_moisture(raw_message)
+    temperature = get_temperature(raw_message)
     # update status
-    STATUS.update_status(raw_message)
+    STATUS.update_status(moisture, temperature)
 
     # temp = str(raw_message)
-    print('Getting messages from application {} with payload {} STATUS {}'
-          .format(msg.dev_id, raw_message, STATUS.get_status()))
+    print('Getting messages from application {} with payload {} moisture {} temperature {}'
+          .format(msg.dev_id, raw_message, moisture, temperature))
 
 
 # create ttn handler
@@ -67,7 +87,11 @@ def index():
 
 @app.route('/status')
 def status():
-    return STATUS.get_status()
+    moisture_latest, temperature_latest = STATUS.get_status()
+    return jsonify(
+        mositure=moisture_latest,
+        temperature=temperature_latest
+    )
 
 
 if __name__ == '__main__':
